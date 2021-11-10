@@ -15,8 +15,8 @@ public class Bird : MonoBehaviour
     public event EventHandler OnDied;
     public event EventHandler OnStartedPlaying;
 
-    [SerializeField] private float m_JumpAmount = 60f;
-    [SerializeField] private Rigidbody m_Rigidbody;
+    [SerializeField] private float m_JumpAmount = 6f;
+    private Rigidbody m_Rigidbody;
 
     private State state;
 
@@ -33,6 +33,11 @@ public class Bird : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Rigidbody.isKinematic = true;
         state = State.WaitingToStart;
+    }
+
+    private void Start()
+    {
+        UIManager.GetInstance().Init();
     }
 
     private void Update()

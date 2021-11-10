@@ -34,25 +34,18 @@ public class Level : MonoBehaviour
         BirdDead,
     }
 
-    public enum Difficulty
-    {
-        Easy,
-        Medium,
-        Hard,
-        Impossible,
-    }
-
     private void Awake()
     {
         instance = this;
         pipeList = new List<Pipe>();
         pipeSpawnTimerMax = 1f;
-        SetDifficulty(Difficulty.Easy);
+        SetDifficulty(GameMode.mode);
         state = State.WaitingToStart;
     }
 
     private void Start()
     {
+        Instantiate(GameAssets.GetInstance().pfBird);
         Bird.GetInstance().OnDied += Bird_OnDied;
         Bird.GetInstance().OnStartedPlaying += Bird_OnStartedPlaying;
     }
@@ -127,7 +120,6 @@ public class Level : MonoBehaviour
         CreatePipe(gapY - gapSize * .5f, xPosition, true);
         CreatePipe(2f - gapY - gapSize * .5f, xPosition, false);
         pipesSpawned++;
-        SetDifficulty(GetDifficulty());
     }
 
     private void CreatePipe(float height, float xPosition, bool createBottom)
@@ -156,38 +148,30 @@ public class Level : MonoBehaviour
     }
 
 
-    private void SetDifficulty(Difficulty difficulty)
+    private void SetDifficulty(string difficulty)
     {
         switch (difficulty)
         {
-            case Difficulty.Easy:
+            case "Easy":
                 gapSize = 50f;
                 pipeSpawnTimerMax = 1.4f;
                 break;
 
-            case Difficulty.Medium:
+            case "Medium":
                 gapSize = 40f;
                 pipeSpawnTimerMax = 1.3f;
                 break;
 
-            case Difficulty.Hard:
+            case "Hard":
                 gapSize = 33f;
                 pipeSpawnTimerMax = 1.1f;
                 break;
 
-            case Difficulty.Impossible:
+            case "Impossible":
                 gapSize = 24f;
                 pipeSpawnTimerMax = 1.0f;
                 break;
         }
-    }
-
-    private Difficulty GetDifficulty()
-    {
-        if (pipesSpawned >= 24) return Difficulty.Impossible;
-        if (pipesSpawned >= 12) return Difficulty.Hard;
-        if (pipesSpawned >= 5) return Difficulty.Medium;
-        return Difficulty.Easy;
     }
 
     public int GetPipesPassedCount()

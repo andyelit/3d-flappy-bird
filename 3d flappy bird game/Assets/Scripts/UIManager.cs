@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] public GameObject gameOverScreenObject;
 
 
-    private void Start()
+    public void Init()
     {
         highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("highscore");
 

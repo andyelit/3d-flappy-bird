@@ -22,13 +22,11 @@ public class SoundManager : MonoBehaviour
     {
         BirdJump,
         Score,
-        Lose,
-        ButtonOver,
-        ButtonClick
+        Lose
     }
 
     public void PlaySound(Sound sound)
-    {        
+    {
         m_AudioSource.PlayOneShot(GetAudioClip(sound));
     }
 
